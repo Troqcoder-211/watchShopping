@@ -1,23 +1,29 @@
-package watchShopping.management;
+package management;
+
+import java.util.ArrayList;
 
 public interface CustomList {
 
-    public void add(Object object);
+	public ArrayList<Object> getArr();
 
-    public void remove(int index);
+	public void setArr(ArrayList<Object> object);
 
-    public Object get(int index);
+	public void add(Object object);
 
-    public void set(int index, Object object);
+	public void remove(int index);
 
-    public int size();
+	public Object get(int index);
 
-    public void clear();
+	public void set(int index, Object object);
 
-    public int findIndex(Object object);
+	public int size();
 
-    public int findIndex(String objectName);
+	public void clear();
 
-    public boolean isObjectAdded(Object object);
+	public int findIndex(Object object);
+
+	public int findIndex(String text);
+
+	public boolean isObjectAdded(Object object);
 
 }
