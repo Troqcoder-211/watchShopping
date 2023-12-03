@@ -1,75 +1,81 @@
-package watchShopping.user;
+package user;
 
 import java.util.ArrayList;
 
-import watchShopping.management.*;
+import management.CustomList;
 
 public class UserList implements CustomList {
-    ArrayList<User> userList = new ArrayList<>();
+	ArrayList<Object> userList = new ArrayList<>();
 
-    public UserList(ArrayList<User> userList) {
-        this.userList = userList;
-    }
+	public UserList() {
+		this.userList = null;
+	}
 
-    public ArrayList<User> getUserList() {
-        return userList;
-    }
+	public UserList(ArrayList<Object> userList) {
+		this.userList = userList;
+	}
 
-    public void setUserList(ArrayList<User> UserList) {
-        this.userList = UserList;
-    }
+	@Override
+	public ArrayList<Object> getArr() {
+		return userList;
+	}
 
-    @Override
-    public void add(Object user) {
-        this.userList.add((User) user);
-    }
+	@Override
+	public void setArr(ArrayList<Object> UserList) {
+		this.userList = UserList;
+	}
 
-    @Override
-    public void remove(int index) {
-        if (this.userList != null && index >= 0 && index < this.userList.size()) {
-            this.userList.remove(index);
-        }
-    }
+	@Override
+	public void add(Object user) {
+		this.userList.add((User) user);
+	}
 
-    @Override
-    public Object get(int index) {
-        return this.userList.get(index);
-    }
+	@Override
+	public void remove(int index) {
+		if (this.userList != null && index >= 0 && index < this.userList.size()) {
+			this.userList.remove(index);
+		}
+	}
 
-    @Override
-    public void set(int index, Object user) {
-        if (this.userList != null && index >= 0 && index < this.userList.size()) {
-            this.userList.set(index, (User) user);
-        }
-    }
+	@Override
+	public Object get(int index) {
+		return this.userList.get(index);
+	}
 
-    @Override
-    public int size() {
-        return this.userList.size();
-    }
+	@Override
+	public void set(int index, Object user) {
+		if (this.userList != null && index >= 0 && index < this.userList.size()) {
+			this.userList.set(index, (User) user);
+		}
+	}
 
-    @Override
-    public void clear() {
-        this.userList.clear();
-    }
+	@Override
+	public int size() {
+		return this.userList.size();
+	}
 
-    @Override
-    public int findIndex(Object user) {
-        return this.userList.indexOf((User) user);
-    }
+	@Override
+	public void clear() {
+		this.userList.clear();
+	}
 
-    @Override
-    public int findIndex(String UserName) {
-        for (int i = 0; i < userList.size(); i++)
-            if (this.userList.get(i).getId().equals(UserName))
+	@Override
+	public int findIndex(Object user) {
+		return this.userList.indexOf((User) user);
+	}
 
-                return i;
-        return -1;
-    }
+	@Override
+	public int findIndex(String UserName) {
+		for (int i = 0; i < userList.size(); i++)
+			if (((User) this.userList.get(i)).getId().equals(UserName))
 
-    @Override
-    public boolean isObjectAdded(Object user) {
-        return this.findIndex(((User) user).getId()) >= 0;
-    }
+				return i;
+		return -1;
+	}
+
+	@Override
+	public boolean isObjectAdded(Object user) {
+		return this.findIndex(((User) user).getId()) >= 0;
+	}
 
 }
