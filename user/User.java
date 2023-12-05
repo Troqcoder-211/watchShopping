@@ -1,15 +1,15 @@
 package user;
 
 public abstract class User {
-	private String id;
+	private String id;// sdt
 	private String password;
-	private String name;
+	private String fullName;
 	private String role;
 
-	public User(String id, String password, String name, String role) {
+	public User(String id, String password, String fullName, String role) {
 		this.id = id;
 		this.password = password;
-		this.name = name;
+		this.fullName = fullName;
 		this.role = role;
 	}
 
@@ -29,12 +29,12 @@ public abstract class User {
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
+	public String getFullName() {
+		return fullName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFullName(String fullname) {
+		this.fullName = fullname;
 	}
 
 	public String getRole() {
@@ -45,10 +45,8 @@ public abstract class User {
 		this.role = role;
 	}
 
-	public abstract void userInfoHandler(String id);
-
 	public String toString() {
-		return id + " " + password + " " + name + " " + role + "\n";
+		return id + " " + password + " " + fullName + " " + role;
 	}
 
 }

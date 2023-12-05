@@ -2,32 +2,28 @@ package user;
 
 public class Customer extends User {
 
-	// CUS <KH_><anything>
-	// regex ^KH_\\w+$
-	// ex KH_abcdefghi
-	private String username;
+	private String status;
 
-	public Customer(String id, String password, String name, String role) {
+	public Customer(String id, String password, String name, String role, String status) {
 		super(id, password, name, role);
-		userInfoHandler(id);
+		this.status = status;
 	}
 
 	public Customer(Customer user) {
-		super(user.getId(), user.getPassword(), user.getName(), user.getRole());
-		this.username = user.getUsername();
+		super(user.getId(), user.getPassword(), user.getFullName(), user.getRole());
+		this.status = user.getStatus();
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override
-	public void userInfoHandler(String id) {
-		this.username = (id.replaceAll("KH_", ""));
+	public String toString() {
+		return super.toString() + " " + status;
 	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 }

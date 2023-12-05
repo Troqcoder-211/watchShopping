@@ -31,10 +31,12 @@ public class UserList implements CustomList {
 	}
 
 	@Override
-	public void remove(int index) {
+	public boolean remove(int index) {
 		if (this.userList != null && index >= 0 && index < this.userList.size()) {
 			this.userList.remove(index);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
@@ -43,10 +45,12 @@ public class UserList implements CustomList {
 	}
 
 	@Override
-	public void set(int index, Object user) {
+	public boolean set(int index, Object user) {
 		if (this.userList != null && index >= 0 && index < this.userList.size()) {
 			this.userList.set(index, (User) user);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
@@ -65,9 +69,9 @@ public class UserList implements CustomList {
 	}
 
 	@Override
-	public int findIndex(String UserName) {
+	public int findIndex(String id) {
 		for (int i = 0; i < userList.size(); i++)
-			if (((User) this.userList.get(i)).getId().equals(UserName))
+			if (((User) this.userList.get(i)).getId().equals(id))
 
 				return i;
 		return -1;

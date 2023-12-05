@@ -25,15 +25,17 @@ public class WatchList implements CustomList {
 	}
 
 	@Override
-	public void add(Object user) {
-		this.listOfWatches.add((Watch) user);
+	public void add(Object watch) {
+		this.listOfWatches.add((Watches) watch);
 	}
 
 	@Override
-	public void remove(int index) {
+	public boolean remove(int index) {
 		if (this.listOfWatches != null && index >= 0 && index < this.listOfWatches.size()) {
 			this.listOfWatches.remove(index);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
@@ -42,10 +44,12 @@ public class WatchList implements CustomList {
 	}
 
 	@Override
-	public void set(int index, Object user) {
+	public boolean set(int index, Object watch) {
 		if (this.listOfWatches != null && index >= 0 && index < this.listOfWatches.size()) {
-			this.listOfWatches.set(index, (Watch) user);
+			this.listOfWatches.set(index, (Watches) watch);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
@@ -59,22 +63,21 @@ public class WatchList implements CustomList {
 	}
 
 	@Override
-	public int findIndex(Object user) {
-		return this.listOfWatches.indexOf((Watch) user);
+	public int findIndex(Object watch) {
+		return this.listOfWatches.indexOf((Watches) watch);
 	}
 
 	@Override
-	public int findIndex(String UserName) {
+	public int findIndex(String id) {
 		for (int i = 0; i < listOfWatches.size(); i++)
-			if (((Watch) this.listOfWatches.get(i)).getId().equals(UserName))
-
+			if (((Watches) this.listOfWatches.get(i)).getId().equals(id))
 				return i;
 		return -1;
 	}
 
 	@Override
-	public boolean isObjectAdded(Object user) {
-		return this.findIndex(((Watch) user).getId()) >= 0;
+	public boolean isObjectAdded(Object watch) {
+		return this.findIndex(((Watches) watch).getId()) >= 0;
 	}
 
 }

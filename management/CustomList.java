@@ -10,11 +10,11 @@ public interface CustomList {
 
 	public void add(Object object);
 
-	public void remove(int index);
+	public boolean remove(int index);
 
 	public Object get(int index);
 
-	public void set(int index, Object object);
+	public boolean set(int index, Object object);
 
 	public int size();
 

@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-
-import user.Admin;
 import user.Customer;
 import user.Staff;
 import user.User;
@@ -28,15 +26,14 @@ public class AccountManagement {
 				while (scanner.hasNextLine()) {
 					String id = scanner.next();
 					String password = scanner.next();
-					String name = scanner.next();
+					String fullname = scanner.next();
 					String role = scanner.next();
+					String otherAttribute = scanner.next();
 					scanner.nextLine();
-					if (role.equalsIgnoreCase("admin")) {
-						this.accountList.add(new Admin(id, password, name, role));
-					} else if (role.equalsIgnoreCase("staff")) {
-						this.accountList.add(new Staff(id, password, name, role));
+					if (role.equalsIgnoreCase("staff")) {
+						this.accountList.add(new Staff(id, password, fullname, role, Integer.parseInt(otherAttribute)));
 					} else if (role.equalsIgnoreCase("customer")) {
-						this.accountList.add(new Customer(id, password, name, role));
+						this.accountList.add(new Customer(id, password, fullname, role, otherAttribute));
 					}
 				}
 			}
@@ -51,7 +48,10 @@ public class AccountManagement {
 		try {
 			FileWriter writer = new FileWriter(this.filepath);
 			for (Object user : this.accountList.getArr()) {
-				writer.write(((User) user).toString());
+				if (user instanceof Staff)
+					writer.write(((Staff) user).toString() + "\n");
+				else if (user instanceof Customer)
+					writer.write(((Customer) user).toString() + "\n");
 			}
 			writer.close();
 		} catch (IOException e) {
@@ -63,33 +63,31 @@ public class AccountManagement {
 	public boolean addUser(User user) {
 		if (accountList.isObjectAdded(user))
 			return false;
-		if (user instanceof Admin)
-			this.accountList.add(new Admin((Admin) user));
-		else if (user instanceof Staff)
+		if (user instanceof Staff)
 			this.accountList.add(new Staff((Staff) user));
 		else if (user instanceof Customer)
 			this.accountList.add(new Customer((Customer) user));
 		return writeFile();
 	}
 
-	public boolean removeUser(String username) {
-		int index = accountList.findIndex(username);
+	public boolean removeUser(String id) {
+		int index = accountList.findIndex(id);
 		if (index == -1)
 			return false;
 		accountList.remove(index);
 		return writeFile();
 	}
 
-	public boolean changeAccountInfo(String username, User user) {
-		int index = accountList.findIndex(username);
+	public boolean changeAccountInfo(String id, User user) {
+		int index = accountList.findIndex(id);
 		if (index == -1)
 			return false;
 		accountList.set(index, user);
 		return writeFile();
 	}
 
-	public User findUserByUserName(String username) {
-		int index = accountList.findIndex(username);
+	public User findUserById(String id) {
+		int index = accountList.findIndex(id);
 		if (index == -1)
 			return null;
 		return (User) accountList.get(index);
