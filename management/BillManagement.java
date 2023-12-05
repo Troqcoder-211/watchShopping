@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import bill.Bill;
 import bill.BillList;
+import function.GeneralFunction;
 
 public class BillManagement {
     private CustomList billList;
@@ -17,7 +18,7 @@ public class BillManagement {
     public BillManagement(String baseDir, String fileName) {
         this.filepath = baseDir + fileName;
         this.billList = new BillList();
-        if (!readFile()) {
+        if (!readFile() || !GeneralFunction.createFile(filepath)) {
             filepath = null;
             this.billList = null;
         }
@@ -57,7 +58,7 @@ public class BillManagement {
             for (Object bill : this.billList.getArr()) {
                 Bill tmpBill = new Bill((Bill) bill);
                 writer.write(
-                        tmpBill.getIdBill() + " " + tmpBill.getIdStaff() + " " + tmpBill.getTime() + " "
+                        tmpBill.getIdBill() + " " + tmpBill.getIdStaff() + " " + tmpBill.getDay() + " "
                                 + tmpBill.getTotalPrice() + " " + tmpBill.getCheckBill());
                 for (String tmpString : tmpBill.getIdProducts()) {
                     writer.write(tmpString + " ");
@@ -90,4 +91,5 @@ public class BillManagement {
         ((Bill) this.billList.get(index)).setCheckBill(true);
         return true;
     }
+
 }

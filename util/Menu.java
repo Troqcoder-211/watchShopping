@@ -1,6 +1,6 @@
-package index;
+package util;
 
-public class giaodien {
+public class Menu {
     public static void welcome() {
         String text = "\t╔══════════════════════════════════════════════════════╗\n"
                 + "\t║                           _                _         ║\n"
@@ -98,15 +98,5 @@ public class giaodien {
                 + "\t║                                                      ║\n";
 
         System.out.println(text);
-    }
-
-    public static void main(String[] args) {
-        // welcome();
-        // admin();
-        // product();
-        // account();
-        // bill()
-        // staff();
-        customer();
     }
 }

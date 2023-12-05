@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import management.CustomList;
 
 public class UserList implements CustomList {
-	ArrayList<Object> userList = new ArrayList<>();
+	private ArrayList<Object> userList;
 
 	public UserList() {
-		this.userList = null;
+		this.userList = new ArrayList<Object>();
 	}
 
 	public UserList(ArrayList<Object> userList) {

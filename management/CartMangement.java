@@ -9,25 +9,22 @@ import java.util.Scanner;
 
 import cart.CartList;
 
-
 import watch.Watches;
 import cart.Cart;
 
 public class CartMangement {
-    
+
     private CustomList cartList;
     private String filepath;
 
-
     public CartMangement(String filepath) {
         this.cartList = new CartList();
-        this.filepath = filepath;        
+        this.filepath = filepath;
         if (!readFile()) {
             filepath = null;
             cartList = null;
         }
     }
-
 
     public boolean readFile() {
         try {
@@ -49,18 +46,17 @@ public class CartMangement {
         return true;
     }
 
-
     public boolean writeFile() {
         try {
             File file = new File(this.filepath);
             file.createNewFile();
             FileWriter writer = new FileWriter(this.filepath);
             for (Object cart : this.cartList.getArr()) {
-                writer.write(((Cart)cart).getId()+"\n");
-                for (Object watch : ((Cart)cart).getWatchList().getArr()) {
-                        
-                        writer.write(((Watches)watch).toString()+"\n");
-    
+                writer.write(((Cart) cart).getId() + "\n");
+                for (Object watch : ((Cart) cart).getWatchList().getArr()) {
+
+                    writer.write(((Watches) watch).toString() + "\n");
+
                 }
             }
             writer.close();
@@ -89,24 +85,20 @@ public class CartMangement {
         return cartList.findIndex(id);
     }
 
-    
-	public boolean changeCartInfo(String id, Cart cart) {
-		int index = cartList.findIndex(id);
-		if (index == -1)
-			return false;
-		cartList.set(index, cart);
-		return writeFile();
-	}
+    public boolean changeCartInfo(String id, Cart cart) {
+        int index = cartList.findIndex(id);
+        if (index == -1)
+            return false;
+        cartList.set(index, cart);
+        return writeFile();
+    }
 
+    public CartList getCartlist() {
+        return (CartList) cartList;
+    }
 
-	public CartList getCartlist() {
-		return (CartList) cartList;
-	}
+    public void setCartlist(CartList cartList) {
+        this.cartList = cartList;
+    }
 
-	public void setCartlist(CartList cartList) {
-		this.cartList = cartList;
-	}
-    
-
-    
 }

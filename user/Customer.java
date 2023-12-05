@@ -9,6 +9,11 @@ public class Customer extends User {
 		this.status = status;
 	}
 
+	public Customer(String id, String password, String name, String status) {
+		super(id, password, name, "customer");
+		this.status = status;
+	}
+
 	public Customer(Customer user) {
 		super(user.getId(), user.getPassword(), user.getFullName(), user.getRole());
 		this.status = user.getStatus();

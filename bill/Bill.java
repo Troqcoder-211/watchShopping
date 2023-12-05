@@ -6,25 +6,25 @@ public class Bill {
     private String idBill;
     private String idStaff;
     private ArrayList<String> idProducts;
-    private String time;
+    private String day;
     private double totalPrice;
     private boolean checkBill;
 
-    public Bill(String idBill, String idStaff, ArrayList<String> idProducts, String time, double totalPrice,
+    public Bill(String idBill, String idStaff, ArrayList<String> idProducts, String day, double totalPrice,
             boolean checkBill) {
         this.idBill = idBill;
         this.idStaff = idStaff;
         this.idProducts = idProducts;
-        this.time = time;
+        this.day = day;
         this.totalPrice = totalPrice;
         this.checkBill = checkBill;
     }
 
-    public Bill(String idBill, String idStaff, ArrayList<String> idProducts, String time, double totalPrice) {
+    public Bill(String idBill, String idStaff, ArrayList<String> idProducts, String day, double totalPrice) {
         this.idBill = idBill;
         this.idStaff = idStaff;
         this.idProducts = idProducts;
-        this.time = time;
+        this.day = day;
         this.totalPrice = totalPrice;
         this.checkBill = false;
     }
@@ -33,7 +33,7 @@ public class Bill {
         this.idBill = bill.getIdBill();
         this.idStaff = bill.getIdStaff();
         this.idProducts = bill.getIdProducts();
-        this.time = bill.getTime();
+        this.day = bill.getDay();
         this.totalPrice = bill.getTotalPrice();
         this.checkBill = bill.getCheckBill();
     }
@@ -62,12 +62,12 @@ public class Bill {
         this.idProducts = idProducts;
     }
 
-    public String getTime() {
-        return time;
+    public String getDay() {
+        return day;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDay(String day) {
+        this.day = day;
     }
 
     public double getTotalPrice() {

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import function.GeneralFunction;
 import watch.WatchList;
 import watch.Watches;
 
@@ -18,7 +19,7 @@ public class WatchManagement {
     public WatchManagement(String filepath) {
         this.watchList = new WatchList();
         this.filepath = filepath;
-        if (!readFile()) {
+        if (!readFile() || !GeneralFunction.createFile(filepath)) {
             filepath = null;
             watchList = null;
         }
@@ -144,6 +145,22 @@ public class WatchManagement {
             return true;
         }
         return false;
+    }
+
+    public CustomList getWatchList() {
+        return watchList;
+    }
+
+    public void setWatchList(CustomList watchList) {
+        this.watchList = watchList;
+    }
+
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
     }
 
 }

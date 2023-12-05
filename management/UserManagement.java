@@ -5,18 +5,24 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+
+import function.GeneralFunction;
 import user.Customer;
 import user.Staff;
 import user.User;
 import user.UserList;
 
-public class AccountManagement {
+public class UserManagement {
 	private CustomList accountList;
 	private String filepath;
 
-	public AccountManagement(String filepath) {
+	public UserManagement(String filepath) {
 		this.accountList = new UserList();
 		this.filepath = filepath;
+		if (!readFile() || !GeneralFunction.createFile(filepath)) {
+			filepath = null;
+			accountList = null;
+		}
 	}
 
 	public boolean readFile() {
@@ -78,7 +84,7 @@ public class AccountManagement {
 		return writeFile();
 	}
 
-	public boolean changeAccountInfo(String id, User user) {
+	public boolean changeUserInfo(String id, User user) {
 		int index = accountList.findIndex(id);
 		if (index == -1)
 			return false;
