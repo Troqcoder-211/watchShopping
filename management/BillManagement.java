@@ -20,7 +20,6 @@ public class BillManagement {
         if (!readFile() || !GeneralFunction.createFile(filepath)) {
             filepath = null;
             this.bill = null;
-
         }
     }
 

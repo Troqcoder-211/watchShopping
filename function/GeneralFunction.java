@@ -38,6 +38,7 @@ public class GeneralFunction {
     public static User login(Scanner scanner) {
         UserManagement accountManagement = new UserManagement(Constant.dataPath.accounts_File);
         System.out.print("Enter your ID(sdt): ");
+        scanner.nextLine();
         String id = scanner.nextLine();
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
