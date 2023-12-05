@@ -106,4 +106,5 @@ public class UserManagement {
 	public void setAcclist(UserList userList) {
 		this.accountList = userList;
 	}
+
 }

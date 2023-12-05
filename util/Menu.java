@@ -29,7 +29,6 @@ public class Menu {
                 + "\t║                                                      ║\n"
                 + "\t║           [1] Product management                     ║\n"
                 + "\t║           [2] Account management                     ║\n"
-                + "\t║           [3] Bill management                        ║\n"
                 + "\t║           [0] Log out                                ║\n"
                 + "\t║                                                      ║\n"
                 + "\t╚══════════════════════════════════════════════════════╝\n";
@@ -53,20 +52,8 @@ public class Menu {
         String text = "\t╔══════════════════════════════════════════════════════╗\n"
                 + "\t║                  ACCOUNT MANAGEMENT                  ║\n"
                 + "\t║                                                      ║\n"
-                + "\t║      [1] View accounts                               ║\n"
-                + "\t║      [2] Change customer status                      ║\n"
-                + "\t║      [3] Add staff                                   ║\n"
-                + "\t║      [0] Home                                        ║\n"
-                + "\t║                                                      ║\n"
-                + "\t╚══════════════════════════════════════════════════════╝\n";
-        System.out.println(text);
-    }
-
-    public static void bill() {
-        String text = "\t╔══════════════════════════════════════════════════════╗\n"
-                + "\t║                    BILL MANAGEMENT                   ║\n"
-                + "\t║                                                      ║\n"
-                + "\t║      [1] View bills                                  ║\n"
+                + "\t║      [1] Delete accounts                             ║\n"
+                + "\t║      [2] Search user                                 ║\n"
                 + "\t║      [0] Home                                        ║\n"
                 + "\t║                                                      ║\n"
                 + "\t╚══════════════════════════════════════════════════════╝\n";
@@ -81,6 +68,7 @@ public class Menu {
                 + "\t║                                                      ║\n"
                 + "\t║           [1] View products                          ║\n"
                 + "\t║           [2] View bills                             ║\n"
+                + "\t║           [0] Home                                   ║\n"
                 + "\t║                                                      ║\n"
                 + "\t╚══════════════════════════════════════════════════════╝\n";
         System.out.println(text);

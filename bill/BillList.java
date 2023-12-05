@@ -71,7 +71,7 @@ public class BillList implements CustomList {
     @Override
     public int findIndex(String text) {
         for (int i = 0; i < this.billList.size(); i++) {
-            if (((Bill) billList.get(i)).getIdBill().equals(text)) {
+            if (((Bill) billList.get(i)).getIdUser().equals(text)) {
                 return i;
             }
         }
@@ -80,6 +80,6 @@ public class BillList implements CustomList {
 
     @Override
     public boolean isObjectAdded(Object object) {
-        return findIndex(((Bill) object).getIdBill()) >= 0;
+        return findIndex(((Bill) object).getIdUser()) >= 0;
     }
 }

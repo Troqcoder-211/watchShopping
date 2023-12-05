@@ -2,20 +2,67 @@ package function;
 
 import java.util.Scanner;
 
+import management.BillManagement;
+import management.UserManagement;
 import management.WatchManagement;
+import user.User;
 import util.Constant;
+import util.Menu;
 import watch.Watches;
 
 public class AdminFunction {
     static WatchManagement watchManagement = new WatchManagement(Constant.dataPath.watches_File);
+    static UserManagement userManagement = new UserManagement(Constant.dataPath.accounts_File);
+
+    public static void AdmintManagement(Scanner scanner) {
+        Menu.admin();
+        String choice;
+        do {
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextLine();
+        } while (choice != "1" && choice == "2" && choice == "0");
+        switch (choice) {
+            case "1":
+                Menu.product();
+                productManagement(scanner);
+                break;
+            case "2":
+                Menu.account();
+                accountManagement(scanner);
+                break;
+            case "0":
+                break;
+            default:
+                break;
+        }
+    }
 
     public static void productManagement(Scanner scanner) {
-        switch ("1") {
+        String choice = scanner.nextLine();
+        switch (choice) {
             case "1":
                 viewProduct(watchManagement);
                 break;
             case "2":
                 addProduct(watchManagement, scanner);
+            case "3":
+                searchProduct(watchManagement, scanner);
+            case "0":
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static void accountManagement(Scanner scanner) {
+        String choice = scanner.nextLine();
+        switch (choice) {
+            case "1":
+                deleteAccount(userManagement, scanner);
+                break;
+            case "2":
+                searchAccount(scanner);
+            case "0":
                 break;
             default:
                 break;
@@ -55,4 +102,25 @@ public class AdminFunction {
             }
         }
     }
+
+    public static void deleteAccount(UserManagement userManagement, Scanner scanner) {
+        for (Object user : userManagement.getAcclist().getArr()) {
+            System.out.println((User) user);
+        }
+        System.out.print("Enter id: ");
+        String id = scanner.nextLine();
+        userManagement.removeUser(id);
+
+    }
+
+    public static void searchAccount(Scanner scanner) {
+        System.out.print("Enter id: ");
+        String id = scanner.nextLine();
+        for (Object user : userManagement.getAcclist().getArr()) {
+            if (((User) user).getId().equals(id)) {
+                System.out.println((User) user);
+            }
+        }
+    }
+
 }

@@ -12,15 +12,15 @@ import bill.BillList;
 import function.GeneralFunction;
 
 public class BillManagement {
-    private CustomList billList;
+    private Bill bill;
     private String filepath;
 
     public BillManagement(String baseDir, String fileName) {
         this.filepath = baseDir + fileName;
-        this.billList = new BillList();
         if (!readFile() || !GeneralFunction.createFile(filepath)) {
             filepath = null;
-            this.billList = null;
+            this.bill = null;
+
         }
     }
 
@@ -29,7 +29,7 @@ public class BillManagement {
             File file = new File(this.filepath);
             try (Scanner scanner = new Scanner(file)) {
                 while (scanner.hasNextLine()) {
-                    String idBill = scanner.next();
+                    String idUser = scanner.next();
                     String idStaff = scanner.next();
                     String time = scanner.next();
                     Double totalPrice = scanner.nextDouble();
@@ -40,8 +40,7 @@ public class BillManagement {
                     for (int i = 0; i < product.length; i++) {
                         idProducts.add(product[i]);
                     }
-
-                    this.billList.add(new Bill(idBill, idStaff, idProducts, time, totalPrice, checkBill));
+                    this.bill = new Bill(idUser, idStaff, idProducts, time, totalPrice, checkBill);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -55,16 +54,15 @@ public class BillManagement {
             File file = new File(this.filepath);
             file.createNewFile();
             FileWriter writer = new FileWriter(this.filepath);
-            for (Object bill : this.billList.getArr()) {
-                Bill tmpBill = new Bill((Bill) bill);
-                writer.write(
-                        tmpBill.getIdBill() + " " + tmpBill.getIdStaff() + " " + tmpBill.getDay() + " "
-                                + tmpBill.getTotalPrice() + " " + tmpBill.getCheckBill());
-                for (String tmpString : tmpBill.getIdProducts()) {
-                    writer.write(tmpString + " ");
-                }
-                writer.write("\n");
+
+            writer.write(
+                    bill.getIdUser() + " " + bill.getIdStaff() + " " + bill.getDay() + " "
+                            + bill.getTotalPrice() + " " + bill.getCheckBill());
+            for (String tmpString : bill.getIdProducts()) {
+                writer.write(tmpString + " ");
             }
+            writer.write("\n");
+
             writer.close();
         } catch (IOException e) {
             return false;
@@ -72,24 +70,25 @@ public class BillManagement {
         return true;
     }
 
-    public boolean addBill(Bill bill) {
-        if (this.billList.isObjectAdded(bill)) {
-            return false;
-        }
-        this.billList.add(bill);
-        return writeFile();
+    public Bill getBill() {
+        return bill;
     }
 
-    public boolean removeBill(int index) {
-        if (!this.billList.remove(index)) {
-            return false;
-        }
-        return writeFile();
+    public void setBill(Bill bill) {
+        this.bill = bill;
     }
 
-    public boolean verifyBill(int index) {
-        ((Bill) this.billList.get(index)).setCheckBill(true);
-        return true;
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
+
+    public void VerifyBill() {
+        bill.setCheckBill(true);
+        writeFile();
     }
 
 }

@@ -3,16 +3,16 @@ package bill;
 import java.util.ArrayList;
 
 public class Bill {
-    private String idBill;
+    private String idUser;
     private String idStaff;
     private ArrayList<String> idProducts;
     private String day;
     private double totalPrice;
     private boolean checkBill;
 
-    public Bill(String idBill, String idStaff, ArrayList<String> idProducts, String day, double totalPrice,
+    public Bill(String idUser, String idStaff, ArrayList<String> idProducts, String day, double totalPrice,
             boolean checkBill) {
-        this.idBill = idBill;
+        this.idUser = idUser;
         this.idStaff = idStaff;
         this.idProducts = idProducts;
         this.day = day;
@@ -20,8 +20,8 @@ public class Bill {
         this.checkBill = checkBill;
     }
 
-    public Bill(String idBill, String idStaff, ArrayList<String> idProducts, String day, double totalPrice) {
-        this.idBill = idBill;
+    public Bill(String idUser, String idStaff, ArrayList<String> idProducts, String day, double totalPrice) {
+        this.idUser = idUser;
         this.idStaff = idStaff;
         this.idProducts = idProducts;
         this.day = day;
@@ -30,7 +30,7 @@ public class Bill {
     }
 
     public Bill(Bill bill) {
-        this.idBill = bill.getIdBill();
+        this.idUser = bill.getIdUser();
         this.idStaff = bill.getIdStaff();
         this.idProducts = bill.getIdProducts();
         this.day = bill.getDay();
@@ -38,12 +38,12 @@ public class Bill {
         this.checkBill = bill.getCheckBill();
     }
 
-    public String getIdBill() {
-        return idBill;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public void setIdBill(String idBill) {
-        this.idBill = idBill;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public String getIdStaff() {
