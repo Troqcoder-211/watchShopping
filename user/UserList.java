@@ -79,7 +79,7 @@ public class UserList implements CustomList {
 
 	@Override
 	public boolean isObjectAdded(Object user) {
-		return this.findIndex(((User) user).getId()) >= 0;
+		return findIndex(((User) user).getId()) >= 0;
 	}
 
 }

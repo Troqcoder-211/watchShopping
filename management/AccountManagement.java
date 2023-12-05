@@ -93,8 +93,8 @@ public class AccountManagement {
 		return (User) accountList.get(index);
 	}
 
-	public User getAcclist() {
-		return (User) accountList;
+	public UserList getAcclist() {
+		return (UserList) accountList;
 	}
 
 	public void setAcclist(UserList userList) {

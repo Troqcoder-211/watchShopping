@@ -68,7 +68,7 @@ public class Watches {
 
 	@Override
 	public String toString() {
-		return id + " " + name + " " + brand + " " + type + " " + price + " " + quantity;
+		return id + " " + brand + " " + type + " " + price + " " + quantity + " " + name;
 	}
 
 }

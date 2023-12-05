@@ -30,12 +30,12 @@ public class WatchManagement {
             try (Scanner scanner = new Scanner(file)) {
                 while (scanner.hasNextLine()) {
                     String id = scanner.next();
-                    String name = scanner.next();
                     String brand = scanner.next();
                     String type = scanner.next();
                     double price = scanner.nextDouble();
                     int quantity = scanner.nextInt();
-                    scanner.nextLine();
+                    String name = scanner.nextLine();
+
                     this.watchList.add(new Watches(id, name, brand, type, price, quantity));
                 }
             }
