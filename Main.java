@@ -1,4 +1,3 @@
-import java.util.Currency;
 import java.util.Scanner;
 
 import function.AdminFunction;
@@ -15,33 +14,56 @@ import util.Menu;
 public class Main {
 	static Scanner scanner = new Scanner(System.in);
 	static User currentUser = null;
+	static boolean loginSession = true;
 
 	public static void main(String[] args) {
 
-		GeneralFunction.createDataDir();
-		Menu.welcome();
-		System.out.print("Your choice: ");
-		int choice = CheckInput.toIntNumeric(scanner.nextLine(), 1, 2);
-		switch (choice) {
+		if (!GeneralFunction.createDataDir()) {
+			System.out.println("Fail to generate data folder");
+			return;
+		}
+
+		do {
+			GeneralFunction.clearScreen();
+			Menu.welcome();
+
+			System.out.print("Your choice: ");
+
+			int choice = CheckInput.toIntNumeric(scanner.nextLine(), 1, 2);
+			switch (choice) {
 			case 1:
 				currentUser = GeneralFunction.login(scanner);
+				GeneralFunction.pressAnyKeyToContinue();
 				break;
 
 			case 2:
 				currentUser = GeneralFunction.register(scanner);
+				GeneralFunction.pressAnyKeyToContinue();
 				break;
 
 			default:
-				break;
-		}
+				System.out.println("Exiting...");
+				loginSession = false;
+				currentUser = null;
+			}
 
-		if (currentUser instanceof Admin) {
-			AdminFunction.AdminManagement(scanner);
-		} else if (currentUser instanceof Staff) {
-			StaffFunction.StaffManagement((Staff) currentUser, scanner);
-		} else if (currentUser instanceof Customer) {
-			CustomerFunction.CustomerBuy((Customer) currentUser, scanner);
-		}
+			while (currentUser != null) {
+				GeneralFunction.clearScreen();
+				if (currentUser instanceof Admin) {
+					if (AdminFunction.AdminManagement(scanner))
+						break;
+				} else if (currentUser instanceof Staff) {
+					if (StaffFunction.StaffManagement((Staff) currentUser, scanner))
+						break;
+				} else if (currentUser instanceof Customer) {
+					if (CustomerFunction.CustomerBuy((Customer) currentUser, scanner))
+						break;
+				}
+
+				System.out.println();
+				GeneralFunction.pressAnyKeyToContinue();
+			}
+		} while (loginSession);
 	}
 
 }
