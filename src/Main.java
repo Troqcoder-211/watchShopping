@@ -33,12 +33,12 @@ public class Main {
 			switch (choice) {
 			case 1:
 				currentUser = GeneralFunction.login(scanner);
-				GeneralFunction.pressAnyKeyToContinue();
+				GeneralFunction.pressAnyKeyToContinue(scanner);
 				break;
 
 			case 2:
 				currentUser = GeneralFunction.register(scanner);
-				GeneralFunction.pressAnyKeyToContinue();
+				GeneralFunction.pressAnyKeyToContinue(scanner);
 				break;
 
 			default:
@@ -61,7 +61,7 @@ public class Main {
 				}
 
 				System.out.println();
-				GeneralFunction.pressAnyKeyToContinue();
+				GeneralFunction.pressAnyKeyToContinue(scanner);
 			}
 		} while (loginSession);
 	}

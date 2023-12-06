@@ -18,10 +18,10 @@ public class GeneralFunction {
 		System.out.flush();
 	}
 
-	public static void pressAnyKeyToContinue() {
+	public static void pressAnyKeyToContinue(Scanner scanner) {
 		System.out.println("\nPress Enter key to continue...");
 		try {
-			System.in.read();
+			scanner.nextLine();
 		} catch (Exception e) {
 		}
 	}

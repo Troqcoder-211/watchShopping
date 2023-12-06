@@ -1,5 +1,6 @@
 package function;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import management.UserManagement;
@@ -19,10 +20,10 @@ public class AdminFunction {
 	public static boolean AdminManagement(Scanner scanner) {
 		Menu.admin();
 		String choice;
-		do {
-			System.out.print("Enter your choice: ");
-			choice = scanner.nextLine();
-		} while (CheckInput.toStrNumberic(choice, 1, 2) == null);
+		System.out.print("Enter your choice: ");
+		choice = scanner.nextLine();
+		if (choice == null)
+			return true;
 		switch (choice) {
 		case "1":
 			Menu.product();
@@ -41,10 +42,10 @@ public class AdminFunction {
 	public static void productManagement(Scanner scanner) {
 		viewProduct(watchManagement);
 		String choice;
-		do {
-			System.out.print("Enter your choice[1-3]: ");
-			choice = scanner.nextLine();
-		} while (CheckInput.toStrNumberic(choice, 1, 3) == null);
+		System.out.print("Enter your choice[1-4]: ");
+		choice = scanner.nextLine();
+		if (choice == null)
+			return;
 		switch (choice) {
 		case "1":
 			addProduct(watchManagement, scanner);
@@ -57,18 +58,15 @@ public class AdminFunction {
 		case "4":
 			searchProduct(watchManagement, scanner);
 			break;
-		default:
-			break;
 		}
 	}
 
 	public static void accountManagement(Scanner scanner) {
 		String choice;
-		do {
-			System.out.print("Enter your choice[1-3]: ");
-			choice = scanner.nextLine();
-		} while (CheckInput.toStrNumberic(choice, 1, 3) == null);
-
+		System.out.print("Enter your choice[1-4]: ");
+		choice = scanner.nextLine();
+		if (choice == null)
+			return;
 		switch (choice) {
 		case "1":
 			deleteAccount(userManagement, scanner);
@@ -81,8 +79,6 @@ public class AdminFunction {
 			break;
 		case "4":
 			blockCustomer(userManagement, scanner);
-		default:
-			break;
 		}
 	}
 
@@ -111,12 +107,11 @@ public class AdminFunction {
 	}
 
 	public static void searchProduct(WatchManagement watchManagement, Scanner scanner) {
-		System.out.print("Enter id: ");
-		String id = scanner.nextLine();
-		for (Object watch : watchManagement.getWatchList().getArr()) {
-			if (((Watches) watch).getId().equals(id)) {
-				System.out.println((Watches) watch);
-			}
+		System.out.print("Enter product name: ");
+		String name = scanner.nextLine();
+		ArrayList<Watches> list = watchManagement.searchWatchesByName(name);
+		for (Watches watches : list) {
+			System.out.println(watches);
 		}
 	}
 
