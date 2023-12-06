@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 import bill.Bill;
 import function.GeneralFunction;
+import util.Constant;
+import watch.Watches;
 
 public class BillManagement {
 	private Bill bill;
@@ -67,6 +69,9 @@ public class BillManagement {
 	public void VerifyBill(String staffID) {
 		bill.setCheckBill(true);
 		bill.setIdStaff(staffID);
+		WatchManagement watchMGR = new WatchManagement(Constant.dataPath.watches_File);
+		int index = watchMGR.getWatchList().findIndex(bill.getIdProduct());
+		watchMGR.setQuantity(index, ((Watches) watchMGR.getWatchList().get(index)).getQuantity() - bill.getQuantity());
 		writeFile();
 	}
 
