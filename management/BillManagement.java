@@ -30,16 +30,15 @@ public class BillManagement {
                 while (scanner.hasNextLine()) {
                     String idUser = scanner.next();
                     String idStaff = scanner.next();
+                    String idProducts = scanner.next();
+                    String nameProduct = scanner.next();
+                    int quantity = Integer.parseInt(scanner.next());
                     String time = scanner.next();
                     Double totalPrice = scanner.nextDouble();
                     boolean checkBill = scanner.nextBoolean();
-                    ArrayList<String> idProducts = new ArrayList<String>();
-                    String line = scanner.nextLine();
-                    String[] product = line.split(" ");
-                    for (int i = 0; i < product.length; i++) {
-                        idProducts.add(product[i]);
-                    }
-                    this.bill = new Bill(idUser, idStaff, idProducts, time, totalPrice, checkBill);
+
+                    this.bill = new Bill(idUser, idStaff, idProducts, nameProduct, quantity, time, totalPrice,
+                            checkBill);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -54,12 +53,8 @@ public class BillManagement {
             file.createNewFile();
             FileWriter writer = new FileWriter(this.filepath);
 
-            writer.write(
-                    bill.getIdUser() + " " + bill.getIdStaff() + " " + bill.getDay() + " "
-                            + bill.getTotalPrice() + " " + bill.getCheckBill());
-            for (String tmpString : bill.getIdProducts()) {
-                writer.write(tmpString + " ");
-            }
+            writer.write(bill.toString());
+
             writer.write("\n");
 
             writer.close();
@@ -85,8 +80,9 @@ public class BillManagement {
         this.filepath = filepath;
     }
 
-    public void VerifyBill() {
+    public void VerifyBill(String staffID) {
         bill.setCheckBill(true);
+        bill.setIdStaff(staffID);
         writeFile();
     }
 

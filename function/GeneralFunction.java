@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import management.UserManagement;
+import user.Admin;
 import user.Customer;
 import user.User;
 import util.CheckInput;
@@ -38,10 +39,13 @@ public class GeneralFunction {
     public static User login(Scanner scanner) {
         UserManagement accountManagement = new UserManagement(Constant.dataPath.accounts_File);
         System.out.print("Enter your ID(sdt): ");
-        scanner.nextLine();
         String id = scanner.nextLine();
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
+        if (id.equals("0988888888") && password.equals("123")) {
+            System.out.println("Successfully logged in as admin");
+            return new Admin("0988888888", "123", "Admin", "admin");
+        }
         User user = accountManagement.findUserById(id);
 
         if (user != null && user.getPassword().equals(password)) {

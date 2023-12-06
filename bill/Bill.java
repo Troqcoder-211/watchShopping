@@ -5,25 +5,32 @@ import java.util.ArrayList;
 public class Bill {
     private String idUser;
     private String idStaff;
-    private ArrayList<String> idProducts;
+    private String idProduct;
+    private String nameProduct;
+    private int quantity;
     private String day;
     private double totalPrice;
     private boolean checkBill;
 
-    public Bill(String idUser, String idStaff, ArrayList<String> idProducts, String day, double totalPrice,
-            boolean checkBill) {
+    public Bill(String idUser, String idStaff, String idProduct, String nameProduct, int quantity, String day,
+            double totalPrice, boolean checkBill) {
         this.idUser = idUser;
         this.idStaff = idStaff;
-        this.idProducts = idProducts;
+        this.idProduct = idProduct;
+        this.nameProduct = nameProduct;
+        this.quantity = quantity;
         this.day = day;
         this.totalPrice = totalPrice;
         this.checkBill = checkBill;
     }
 
-    public Bill(String idUser, String idStaff, ArrayList<String> idProducts, String day, double totalPrice) {
+    public Bill(String idUser, String idProduct, String nameProduct, int quantity, String day,
+            double totalPrice) {
         this.idUser = idUser;
-        this.idStaff = idStaff;
-        this.idProducts = idProducts;
+        this.idStaff = null;
+        this.idProduct = idProduct;
+        this.nameProduct = nameProduct;
+        this.quantity = quantity;
         this.day = day;
         this.totalPrice = totalPrice;
         this.checkBill = false;
@@ -32,7 +39,7 @@ public class Bill {
     public Bill(Bill bill) {
         this.idUser = bill.getIdUser();
         this.idStaff = bill.getIdStaff();
-        this.idProducts = bill.getIdProducts();
+        this.idProduct = bill.getIdProduct();
         this.day = bill.getDay();
         this.totalPrice = bill.getTotalPrice();
         this.checkBill = bill.getCheckBill();
@@ -54,12 +61,28 @@ public class Bill {
         this.idStaff = idStaff;
     }
 
-    public ArrayList<String> getIdProducts() {
-        return idProducts;
+    public String getIdProduct() {
+        return idProduct;
     }
 
-    public void setIdProducts(ArrayList<String> idProducts) {
-        this.idProducts = idProducts;
+    public void setIdProduct(String idProduct) {
+        this.idProduct = idProduct;
+    }
+
+    public String getNameProduct() {
+        return nameProduct;
+    }
+
+    public void setNameProduct(String nameProduct) {
+        this.nameProduct = nameProduct;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public String getDay() {
@@ -86,4 +109,9 @@ public class Bill {
         this.checkBill = checkBill;
     }
 
+    @Override
+    public String toString() {
+        return idUser + " " + idStaff + " " + idProduct + " " + nameProduct + " " + quantity + " " + day + " "
+                + totalPrice + " " + checkBill;
+    }
 }

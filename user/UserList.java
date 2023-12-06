@@ -72,7 +72,6 @@ public class UserList implements CustomList {
 	public int findIndex(String id) {
 		for (int i = 0; i < userList.size(); i++)
 			if (((User) this.userList.get(i)).getId().equals(id))
-
 				return i;
 		return -1;
 	}

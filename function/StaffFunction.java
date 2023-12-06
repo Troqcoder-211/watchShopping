@@ -8,6 +8,7 @@ import java.util.Scanner;
 import management.BillManagement;
 import management.UserManagement;
 import management.WatchManagement;
+import user.Staff;
 import util.CheckInput;
 import util.Constant;
 import util.Menu;
@@ -16,7 +17,8 @@ import watch.Watches;
 public class StaffFunction {
     static UserManagement userManagement = new UserManagement(Constant.dataPath.accounts_File);
 
-    public static void StaffManagement(WatchManagement watchManagement, Scanner scanner) {
+    public static void StaffManagement(Staff staff, Scanner scanner) {
+        WatchManagement watchManagement = new WatchManagement(Constant.dataPath.watches_File);
         Menu.staff();
         String choice;
         do {
@@ -28,7 +30,7 @@ public class StaffFunction {
                 viewProduct(watchManagement);
                 break;
             case "2":
-                viewBills(scanner);
+                viewBills(staff, scanner);
                 break;
             case "0":
                 break;
@@ -43,7 +45,7 @@ public class StaffFunction {
         }
     }
 
-    public static void viewBills(Scanner scanner) {
+    public static void viewBills(Staff staff, Scanner scanner) {
         listFileInDir(Constant.dataPath.Bills_Dir);
         System.out.println("View details of bill: ");
         System.out.print("Enter id: ");
@@ -54,7 +56,7 @@ public class StaffFunction {
             System.out.println("Verify bill[y/n]: ");
             if (CheckInput.toYesNo(scanner.nextLine())) {
                 BillManagement billManagement = new BillManagement(Constant.dataPath.Bills_Dir, id);
-                billManagement.VerifyBill();
+                billManagement.VerifyBill(staff.getId());
             }
         }
     }

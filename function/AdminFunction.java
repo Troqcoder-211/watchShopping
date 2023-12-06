@@ -5,7 +5,10 @@ import java.util.Scanner;
 import management.BillManagement;
 import management.UserManagement;
 import management.WatchManagement;
+import user.Customer;
+import user.Staff;
 import user.User;
+import util.CheckInput;
 import util.Constant;
 import util.Menu;
 import watch.Watches;
@@ -14,13 +17,13 @@ public class AdminFunction {
     static WatchManagement watchManagement = new WatchManagement(Constant.dataPath.watches_File);
     static UserManagement userManagement = new UserManagement(Constant.dataPath.accounts_File);
 
-    public static void AdmintManagement(Scanner scanner) {
+    public static void AdminManagement(Scanner scanner) {
         Menu.admin();
         String choice;
         do {
             System.out.print("Enter your choice: ");
             choice = scanner.nextLine();
-        } while (choice != "1" && choice == "2" && choice == "0");
+        } while (CheckInput.toStrNumberic(choice, 1, 2) == null);
         switch (choice) {
             case "1":
                 Menu.product();
@@ -38,16 +41,23 @@ public class AdminFunction {
     }
 
     public static void productManagement(Scanner scanner) {
-        String choice = scanner.nextLine();
+        viewProduct(watchManagement);
+        String choice;
+        do {
+            System.out.print("Enter your choice[1-3]: ");
+            choice = scanner.nextLine();
+        } while (CheckInput.toStrNumberic(choice, 1, 3) == null);
         switch (choice) {
             case "1":
-                viewProduct(watchManagement);
+                addProduct(watchManagement, scanner);
                 break;
             case "2":
-                addProduct(watchManagement, scanner);
+                editProduct(watchManagement, scanner);
+                break;
             case "3":
+                deleteProduct(watchManagement, scanner);
+            case "4":
                 searchProduct(watchManagement, scanner);
-            case "0":
                 break;
             default:
                 break;
@@ -55,15 +65,24 @@ public class AdminFunction {
     }
 
     public static void accountManagement(Scanner scanner) {
-        String choice = scanner.nextLine();
+        String choice;
+        do {
+            System.out.print("Enter your choice[1-3]: ");
+            choice = scanner.nextLine();
+        } while (CheckInput.toStrNumberic(choice, 1, 3) == null);
+
         switch (choice) {
             case "1":
                 deleteAccount(userManagement, scanner);
                 break;
             case "2":
-                searchAccount(scanner);
-            case "0":
+
+                searchAccount(userManagement, scanner);
+            case "3":
+                addStaff(userManagement, scanner);
                 break;
+            case "4":
+                blockCustomer(userManagement, scanner);
             default:
                 break;
         }
@@ -104,23 +123,84 @@ public class AdminFunction {
     }
 
     public static void deleteAccount(UserManagement userManagement, Scanner scanner) {
-        for (Object user : userManagement.getAcclist().getArr()) {
-            System.out.println((User) user);
-        }
+        displayUserlist(userManagement);
         System.out.print("Enter id: ");
         String id = scanner.nextLine();
         userManagement.removeUser(id);
 
     }
 
-    public static void searchAccount(Scanner scanner) {
-        System.out.print("Enter id: ");
-        String id = scanner.nextLine();
+    public static void searchAccount(UserManagement userManagement, Scanner scanner) {
+        displayUserlist(userManagement);
+        System.out.print("Enter Name: ");
+        String name = scanner.nextLine();
         for (Object user : userManagement.getAcclist().getArr()) {
-            if (((User) user).getId().equals(id)) {
+            if (((User) user).getFullName().contains(name)) {
                 System.out.println((User) user);
             }
         }
     }
 
+    public static void displayUserlist(UserManagement userManagement) {
+        for (Object user : userManagement.getAcclist().getArr()) {
+            System.out.println((User) user);
+        }
+    }
+
+    public static void displayWatchlist(WatchManagement watchManagement) {
+        for (Object watch : watchManagement.getWatchList().getArr()) {
+            System.out.println((Watches) watch);
+        }
+    }
+
+    public static void addStaff(UserManagement userManagement, Scanner scanner) {
+        System.out.print("Enter Id you want to .... staff ");
+        String id = scanner.nextLine();
+        int shift;
+        do {
+            System.out.println("Enter staff's shift [1-4]: ");
+            shift = CheckInput.toIntNumeric(scanner.nextLine(), 1, 4);
+        } while (shift == -1);
+        int index = userManagement.getAcclist().findIndex(id);
+        User tmp = (User) userManagement.getAcclist().get(index);
+        userManagement.getAcclist().set(index, new Staff(tmp.getId(), tmp.getPassword(), tmp.getFullName(),
+                tmp.getRole(), shift));
+    }
+
+    public static void blockCustomer(UserManagement userManagement, Scanner scanner) {
+        displayUserlist(userManagement);
+        System.out.print("Enter id: ");
+        String id = scanner.nextLine();
+        int index = userManagement.getAcclist().findIndex(id);
+        User tmp = (User) userManagement.getAcclist().get(index);
+        userManagement.getAcclist().set(index, new Customer(tmp.getId(), tmp.getPassword(), tmp.getFullName(),
+                "0"));
+    }
+
+    public static void editProduct(WatchManagement watchManagement, Scanner scanner) {
+        displayWatchlist(watchManagement);
+        System.out.print("Enter id: ");
+        String id = scanner.nextLine();
+        int index = watchManagement.getWatchList().findIndex(id);
+        Watches tmp = (Watches) watchManagement.getWatchList().get(index);
+        System.out.print("Enter new price");
+        String newprice = (CheckInput.toStrNumberic(scanner.nextLine()));
+        System.out.print("Enter new quantity");
+        String newquantity = (CheckInput.toStrNumberic(scanner.nextLine()));
+        if (newprice != null) {
+            tmp.setPrice(Double.parseDouble(newprice));
+        }
+        if (newquantity != null) {
+            tmp.setQuantity(Integer.parseInt(newquantity));
+        }
+        watchManagement.getWatchList().set(index, tmp);
+    }
+
+    public static void deleteProduct(WatchManagement watchManagement, Scanner scanner) {
+        displayWatchlist(watchManagement);
+        System.out.print("Enter id: ");
+        String id = scanner.nextLine();
+        int index = watchManagement.getWatchList().findIndex(id);
+        watchManagement.getWatchList().remove(index);
+    }
 }

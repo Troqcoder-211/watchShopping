@@ -42,6 +42,7 @@ public class Menu {
                 + "\t║      [1] Add product                                 ║\n"
                 + "\t║      [2] Edit product                                ║\n"
                 + "\t║      [3] Remove product                              ║\n"
+                + "\t║      [3] Search product                              ║\n"
                 + "\t║      [0] Home                                        ║\n"
                 + "\t║                                                      ║\n"
                 + "\t╚══════════════════════════════════════════════════════╝\n";
@@ -55,6 +56,7 @@ public class Menu {
                 + "\t║      [1] Delete accounts                             ║\n"
                 + "\t║      [2] Search user                                 ║\n"
                 + "\t║      [3] Add staff                                   ║\n"
+                + "\t║      [3] Block customer                              ║\n"
                 + "\t║      [0] Home                                        ║\n"
                 + "\t║                                                      ║\n"
                 + "\t╚══════════════════════════════════════════════════════╝\n";
