@@ -20,10 +20,10 @@ public class StaffFunction {
 		WatchManagement watchManagement = new WatchManagement(Constant.dataPath.watches_File);
 		Menu.staff();
 		String choice;
-		do {
-			System.out.print("Enter your choice: ");
-			choice = scanner.nextLine();
-		} while (choice != "1" && choice != "2" && choice != "0");
+		System.out.print("Enter your choice: ");
+		choice = CheckInput.toStrNumberic(scanner.nextLine(), 1, 2);
+		if (choice == null)
+			return true;
 		switch (choice) {
 		case "1":
 			viewProduct(watchManagement);
@@ -31,8 +31,6 @@ public class StaffFunction {
 		case "2":
 			viewBills(staff, scanner);
 			break;
-		default:
-			return true;
 		}
 		return false;
 	}

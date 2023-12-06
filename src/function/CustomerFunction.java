@@ -22,7 +22,7 @@ public class CustomerFunction {
 		Menu.customer();
 		displayWatchlist(watchManagement);
 		System.out.print("Enter id product you want to buy (or leave blank to logout): ");
-		scanner.nextLine();
+//		scanner.nextLine();
 		String id = scanner.nextLine();
 		if (id.equals(""))
 			return true;
@@ -34,7 +34,7 @@ public class CustomerFunction {
 			String strQuanti;
 			do {
 				System.out.print("Enter quantity you want to buy: ");
-				strQuanti = CheckInput.toStrNumberic(id, 1, quantity);
+				strQuanti = CheckInput.toStrNumberic(scanner.nextLine(), 1, quantity);
 				if (strQuanti == null) {
 					System.out.println("Please enter quantity again, because quantity not enough");
 				}

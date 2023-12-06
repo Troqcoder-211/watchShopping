@@ -15,10 +15,7 @@ public class BillManagement {
 
 	public BillManagement(String baseDir, String fileName) {
 		this.filepath = baseDir + fileName;
-		if (!readFile() || !GeneralFunction.createFile(filepath)) {
-			filepath = null;
-			this.bill = null;
-		}
+		readFile();
 	}
 
 	public boolean readFile() {
@@ -30,10 +27,10 @@ public class BillManagement {
 					String idStaff = scanner.nextLine();
 					String idProduct = scanner.nextLine();
 					String nameProduct = scanner.nextLine();
-					int quantity = scanner.nextInt();
+					int quantity = Integer.parseInt(scanner.nextLine());
 					String time = scanner.nextLine();
-					double totalPrice = scanner.nextDouble();
-					boolean checkBill = scanner.nextBoolean();
+					double totalPrice = Double.parseDouble(scanner.nextLine());
+					boolean checkBill = Boolean.parseBoolean(scanner.nextLine());
 
 					this.bill = new Bill(idUser, idStaff, idProduct, nameProduct, quantity, time, totalPrice,
 							checkBill);
