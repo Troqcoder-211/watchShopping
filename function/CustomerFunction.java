@@ -22,6 +22,7 @@ public class CustomerFunction {
 		Menu.customer();
 		displayWatchlist(watchManagement);
 		System.out.print("Enter id product you want to buy (or leave blank to logout): ");
+		scanner.nextLine();
 		String id = scanner.nextLine();
 		if (id.equals(""))
 			return true;
