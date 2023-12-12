@@ -31,20 +31,20 @@ public class Main {
 
 			int choice = CheckInput.toIntNumeric(scanner.nextLine(), 1, 2);
 			switch (choice) {
-			case 1:
-				currentUser = GeneralFunction.login(scanner);
-				GeneralFunction.pressAnyKeyToContinue(scanner);
-				break;
+				case 1:
+					currentUser = GeneralFunction.login(scanner);
+					GeneralFunction.pressAnyKeyToContinue(scanner);
+					break;
 
-			case 2:
-				currentUser = GeneralFunction.register(scanner);
-				GeneralFunction.pressAnyKeyToContinue(scanner);
-				break;
+				case 2:
+					currentUser = GeneralFunction.register(scanner);
+					GeneralFunction.pressAnyKeyToContinue(scanner);
+					break;
 
-			default:
-				System.out.println("Exiting...");
-				loginSession = false;
-				currentUser = null;
+				default:
+					System.out.println("Exiting...");
+					loginSession = false;
+					currentUser = null;
 			}
 
 			while (currentUser != null) {

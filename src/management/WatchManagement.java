@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 import function.GeneralFunction;
 import watch.WatchList;
@@ -26,19 +25,28 @@ public class WatchManagement {
 	}
 
 	public boolean readFile() {
+		double price;
+		int quantity;
+		String id;
+		String brand;
+		String type;
+		String name;
 		try {
 			File file = new File(this.filepath);
 			try (Scanner scanner = new Scanner(file)) {
 				while (scanner.hasNextLine()) {
-					String id = scanner.next();
-					String brand = scanner.next();
-					String type = scanner.next();
-					double price = scanner.nextDouble();
-					int quantity = scanner.nextInt();
-					String name = scanner.nextLine();
+
+					id = scanner.next();
+					brand = scanner.next();
+					type = scanner.next();
+					price = Double.parseDouble(scanner.next());
+					quantity = scanner.nextInt();
+					name = scanner.nextLine();
 
 					this.watchList.add(new Watches(id, name, brand, type, price, quantity));
 				}
+			} catch (InputMismatchException e) {
+				e.printStackTrace();
 			}
 		} catch (FileNotFoundException e) {
 			return false;

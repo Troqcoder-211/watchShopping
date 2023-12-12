@@ -22,10 +22,14 @@ public class CustomerFunction {
 		Menu.customer();
 		displayWatchlist(watchManagement);
 		System.out.print("Enter id product you want to buy (or leave blank to logout): ");
-//		scanner.nextLine();
-		String id = scanner.nextLine();
-		if (id.equals(""))
-			return true;
+		String id;
+		while (true) {
+			id = scanner.nextLine();
+			if (watchManagement.getWatchList().findIndex(id) != -1) {
+				break;
+			}
+			System.out.print("Id already exists. Enter again: ");
+		}
 		int index;
 		if ((index = watchManagement.getWatchList().findIndex(id)) != -1) {
 
@@ -55,8 +59,15 @@ public class CustomerFunction {
 	}
 
 	public static void displayWatchlist(WatchManagement watchManagement) {
+		System.out.format("%-10s%-20s%-10s%-10s%-20s%-20s\n", "ID", "Name", "Brand", "Type", "Price", "Quantity");
 		for (Object watch : watchManagement.getWatchList().getArr()) {
-			System.out.println((Watches) watch);
+			System.out.format("%-10s%-20s%-10s%-10s%-20f%-20d\n",
+					((Watches) watch).getId(),
+					((Watches) watch).getName(),
+					((Watches) watch).getBrand(),
+					((Watches) watch).getType(),
+					((Watches) watch).getPrice(),
+					((Watches) watch).getQuantity());
 		}
 	}
 }
