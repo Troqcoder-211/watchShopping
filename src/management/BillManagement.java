@@ -31,7 +31,8 @@ public class BillManagement {
 					String nameProduct = scanner.nextLine();
 					int quantity = Integer.parseInt(scanner.nextLine());
 					String time = scanner.nextLine();
-					double totalPrice = Double.parseDouble(scanner.nextLine());
+					String strPrice = scanner.nextLine();
+					long totalPrice = Long.parseLong(strPrice.replaceAll("\\D",""));
 					boolean checkBill = Boolean.parseBoolean(scanner.nextLine());
 
 					this.bill = new Bill(idUser, idStaff, idProduct, nameProduct, quantity, time, totalPrice,
