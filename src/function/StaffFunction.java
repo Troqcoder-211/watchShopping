@@ -3,7 +3,6 @@ package function;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
 import management.BillManagement;
 import management.UserManagement;
 import management.WatchManagement;
@@ -25,12 +24,12 @@ public class StaffFunction {
 		if (choice == null)
 			return true;
 		switch (choice) {
-		case "1":
-			viewProduct(watchManagement);
-			break;
-		case "2":
-			viewBills(staff, scanner);
-			break;
+			case "1":
+				viewProduct(watchManagement);
+				break;
+			case "2":
+				viewBills(staff, scanner);
+				break;
 		}
 		return false;
 	}
@@ -44,16 +43,19 @@ public class StaffFunction {
 	public static void viewBills(Staff staff, Scanner scanner) {
 		listFileInDir(Constant.dataPath.Bills_Dir);
 		System.out.println("View details of bill: ");
-		System.out.print("Enter id: ");
-		String id = scanner.nextLine();
-		if (!displayContent(Constant.dataPath.Bills_Dir + id)) {
-			System.out.println("Bill does not exist");
-		} else {
-			System.out.println("Verify bill[y/n]: ");
-			if (CheckInput.toYesNo(scanner.nextLine())) {
-				BillManagement billManagement = new BillManagement(Constant.dataPath.Bills_Dir, id);
-				billManagement.VerifyBill(staff.getId());
+		String id;
+		do {
+			System.out.print("Enter id: ");
+			id = scanner.nextLine();
+			if (!displayContent(Constant.dataPath.Bills_Dir + id)) {
+				System.out.println("Bill not found");
 			}
+		} while (!displayContent(Constant.dataPath.Bills_Dir + id));
+		System.out.println("Verify bill[y/n]: ");
+		if (CheckInput.toYesNo(scanner.nextLine())) {
+			BillManagement billManagement = new BillManagement(Constant.dataPath.Bills_Dir, id);
+			billManagement.VerifyBill(staff.getId());
+
 		}
 	}
 

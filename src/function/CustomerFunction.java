@@ -22,13 +22,9 @@ public class CustomerFunction {
 		Menu.customer();
 		displayWatchlist(watchManagement);
 		System.out.print("Enter id product you want to buy (or leave blank to logout): ");
-		String id;
-		while (true) {
-			id = scanner.nextLine();
-			if (watchManagement.getWatchList().findIndex(id) != -1) {
-				break;
-			}
-			System.out.print("Id already exists. Enter again: ");
+		String id = scanner.nextLine();
+		if (id.equals("")) {
+			return true;
 		}
 		int index;
 		if ((index = watchManagement.getWatchList().findIndex(id)) != -1) {
@@ -44,7 +40,7 @@ public class CustomerFunction {
 				}
 			} while (strQuanti == null);
 			int quantityToBuy = Integer.parseInt(strQuanti);
-			String currentDate = new SimpleDateFormat("dd-MM-yyyy-h:m:s").format(new java.util.Date());
+			String currentDate = new SimpleDateFormat("dd-MM-yyyy-h-m-s").format(new java.util.Date());
 			Watches tmp = (Watches) watchManagement.getWatchList().get(index);
 			Bill newBill = new Bill(customer.getId(), tmp.getId(), tmp.getName(), quantityToBuy, currentDate,
 					(quantityToBuy * tmp.getPrice()));
