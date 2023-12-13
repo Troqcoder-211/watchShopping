@@ -7,6 +7,7 @@ import management.BillManagement;
 import management.UserManagement;
 import management.WatchManagement;
 import user.Staff;
+import util.ChangeFormat;
 import util.CheckInput;
 import util.Constant;
 import util.Menu;
@@ -25,7 +26,7 @@ public class StaffFunction {
 			return true;
 		switch (choice) {
 			case "1":
-				viewProduct(watchManagement);
+				displayWatchlist(watchManagement);
 				break;
 			case "2":
 				viewBills(staff, scanner);
@@ -34,9 +35,17 @@ public class StaffFunction {
 		return false;
 	}
 
-	public static void viewProduct(WatchManagement watchManagement) {
+	public static void displayWatchlist(WatchManagement watchManagement) {
+		System.out.format("%-10s%-20s%-20s%-20s%-20s%-20s\n", "ID", "Name", "Brand", "Type", "Price", "Quantity");
 		for (Object watch : watchManagement.getWatchList().getArr()) {
-			System.out.println((Watches) watch);
+			System.out.format("%-10s%-20s%-20s%-20s%-20s%-20d\n",
+					((Watches) watch).getId(),
+					((Watches) watch).getName(),
+					((Watches) watch).getBrand(),
+					((Watches) watch).getType(),
+					ChangeFormat.priceFormat(((Watches) watch).getPrice()),
+					((Watches) watch).getQuantity());
+
 		}
 	}
 
@@ -44,13 +53,14 @@ public class StaffFunction {
 		listFileInDir(Constant.dataPath.Bills_Dir);
 		System.out.println("View details of bill: ");
 		String id;
-		do {
+		System.out.print("Enter id: ");
+		id = scanner.nextLine();
+		while (!displayContent(Constant.dataPath.Bills_Dir + id)){
+			System.out.println("Bill not found");
 			System.out.print("Enter id: ");
 			id = scanner.nextLine();
-			if (!displayContent(Constant.dataPath.Bills_Dir + id)) {
-				System.out.println("Bill not found");
-			}
-		} while (!displayContent(Constant.dataPath.Bills_Dir + id));
+		}
+		
 		System.out.println("Verify bill[y/n]: ");
 		if (CheckInput.toYesNo(scanner.nextLine())) {
 			BillManagement billManagement = new BillManagement(Constant.dataPath.Bills_Dir, id);

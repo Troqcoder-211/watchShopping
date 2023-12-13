@@ -1,15 +1,17 @@
 package watch;
 
+import util.ChangeFormat;
+
 public class Watches {
 
 	private String id;
 	private String name;
 	private String brand;
 	private String type;
-	private double price;
+	private long price;
 	private int quantity;
 
-	public Watches(String id, String name, String brand, String type, double price, int quantity) {
+	public Watches(String id, String name, String brand, String type, long price, int quantity) {
 		this.id = id;
 		this.name = name;
 		this.brand = brand;
@@ -42,11 +44,11 @@ public class Watches {
 		this.name = name;
 	}
 
-	public double getPrice() {
+	public long getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 
@@ -68,7 +70,7 @@ public class Watches {
 
 	@Override
 	public String toString() {
-		return id + " " + brand + " " + type + " " + price + " " + quantity + " " + name;
+		return id + " " + brand + " " + type + " " + ChangeFormat.priceFormat(price) + " " + quantity + " " + name;
 	}
 
 }

@@ -1,5 +1,7 @@
 package bill;
 
+import util.ChangeFormat;
+
 public class Bill {
 	private String idUser;
 	private String idStaff;
@@ -7,11 +9,11 @@ public class Bill {
 	private String nameProduct;
 	private int quantity;
 	private String day;
-	private double totalPrice;
+	private long totalPrice;
 	private boolean checkBill;
 
 	public Bill(String idUser, String idStaff, String idProduct, String nameProduct, int quantity, String day,
-			double totalPrice, boolean checkBill) {
+			long totalPrice, boolean checkBill) {
 		this.idUser = idUser;
 		this.idStaff = idStaff;
 		this.idProduct = idProduct;
@@ -22,7 +24,7 @@ public class Bill {
 		this.checkBill = checkBill;
 	}
 
-	public Bill(String idUser, String idProduct, String nameProduct, int quantity, String day, double totalPrice) {
+	public Bill(String idUser, String idProduct, String nameProduct, int quantity, String day, long totalPrice) {
 		this.idUser = idUser;
 		this.idStaff = null;
 		this.idProduct = idProduct;
@@ -90,11 +92,11 @@ public class Bill {
 		this.day = day;
 	}
 
-	public double getTotalPrice() {
+	public long getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(double totalPrice) {
+	public void setTotalPrice(long totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
@@ -109,6 +111,6 @@ public class Bill {
 	@Override
 	public String toString() {
 		return idUser + "\n" + idStaff + "\n" + idProduct + "\n" + nameProduct + "\n" + quantity + "\n" + day + "\n"
-				+ totalPrice + "\n" + checkBill;
+				+ ChangeFormat.priceFormat(totalPrice) + "\n" + checkBill;
 	}
 }

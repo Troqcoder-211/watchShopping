@@ -7,18 +7,13 @@ public class CheckInput {
         return validator.isValid(dateStr) ? dateStr : null;
     }
 
-    public static String toStrInteger(String str) {
-        InputValidator validator = new regexValidator("-?\\d+");
-        return validator.isValid(str) ? str : null;
-    }
-
     public static String toStrNumberic(String str) {
-        InputValidator validator = new regexValidator("-?\\d+(\\.\\d+)?");
+        InputValidator validator = new regexValidator("\\d+(\\.\\d+)?");
         return validator.isValid(str) ? str : null;
     }
 
     public static String toStrNumberic(String str, int low, int high) {
-        InputValidator validator = new regexValidator("-?\\d+(\\.\\d+)?");
+        InputValidator validator = new regexValidator("\\d+");
         if (validator.isValid(str))
             if (Integer.parseInt(str) >= low && Integer.parseInt(str) <= high)
                 return str;
@@ -26,12 +21,12 @@ public class CheckInput {
     }
 
     public static Integer toIntNumeric(String str) {
-        InputValidator validator = new regexValidator("-?\\d+");
+        InputValidator validator = new regexValidator("\\d+");
         return validator.isValid(str) ? Integer.parseInt(str) : -1;
     }
 
     public static Integer toIntNumeric(String str, int low, int high) {
-        InputValidator validator = new regexValidator("-?\\d+");
+        InputValidator validator = new regexValidator("\\d+");
         if (validator.isValid(str)) {
             int intValue = Integer.parseInt(str);
             if (intValue >= low && intValue <= high)

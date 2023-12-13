@@ -25,7 +25,7 @@ public class WatchManagement {
 	}
 
 	public boolean readFile() {
-		double price;
+		long price;
 		int quantity;
 		String id;
 		String brand;
@@ -39,7 +39,8 @@ public class WatchManagement {
 					id = scanner.next();
 					brand = scanner.next();
 					type = scanner.next();
-					price = Double.parseDouble(scanner.next());
+					String strPrice = scanner.next();
+					price = Long.parseLong(strPrice.replaceAll("\\D",""));
 					quantity = scanner.nextInt();
 					name = scanner.nextLine();
 
@@ -129,7 +130,7 @@ public class WatchManagement {
 		return arrayofWatches;
 	}
 
-	public ArrayList<Integer> searchIndexByPrice(double low, double high) {
+	public ArrayList<Integer> searchIndexByPrice(long low, long high) {
 		ArrayList<Integer> arrayofIndex = new ArrayList<Integer>();
 		for (Object watch : watchList.getArr()) {
 			if (((Watches) watch).getPrice() <= high && ((Watches) watch).getPrice() >= low) {
@@ -139,9 +140,10 @@ public class WatchManagement {
 		return arrayofIndex;
 	}
 
-	public boolean setPrice(int index, double price) {
+	public boolean setPrice(int index, long price) {
 		if (this.watchList != null && index >= 0 && index < this.watchList.size()) {
 			((Watches) this.watchList.get(index)).setPrice(price);
+			writeFile();
 			return true;
 		}
 		return false;
@@ -154,6 +156,26 @@ public class WatchManagement {
 			return true;
 		}
 		return false;
+	}
+
+	public long getPrice(int index){
+			return ((Watches) this.watchList.get(index)).getPrice();
+	}
+
+	public int getQuantity(int index){
+			return ((Watches) this.watchList.get(index)).getQuantity();
+	}
+
+	public String getName(int index){
+			return ((Watches) this.watchList.get(index)).getName();
+	}
+
+	public String getBrand(int index){
+			return ((Watches) this.watchList.get(index)).getBrand();
+	}
+	
+	public String getType(int index){
+			return ((Watches) this.watchList.get(index)).getType();
 	}
 
 	public CustomList getWatchList() {

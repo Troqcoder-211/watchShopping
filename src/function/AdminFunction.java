@@ -8,6 +8,7 @@ import management.WatchManagement;
 import user.Customer;
 import user.Staff;
 import user.User;
+import util.ChangeFormat;
 import util.CheckInput;
 import util.Constant;
 import util.Menu;
@@ -86,14 +87,6 @@ public class AdminFunction {
 				break;
 		}
 	}
-
-	public static void viewProduct(WatchManagement watchManagement) {
-
-		for (Object watch : watchManagement.getWatchList().getArr()) {
-			System.out.println((Watches) watch);
-		}
-	}
-
 	public static void addProduct(WatchManagement watchManagement, Scanner scanner) {
 		String id;
 		System.out.print("Enter id: ");
@@ -110,24 +103,23 @@ public class AdminFunction {
 		String brand = scanner.nextLine();
 		System.out.print("Enter type: ");
 		String type = scanner.nextLine();
-		System.out.print("Enter price: ");
-		double price;
-		while (true) {
-			price = Double.parseDouble(scanner.nextLine());
-			if (price > 0) {
-				break;
-			}
-			System.out.print("Price must be greater than 0. Enter again: ");
-		}
-		System.out.print("Enter quantity: ");
-		int quantity;
-		while (true) {
-			quantity = Integer.parseInt(scanner.nextLine());
-			if (quantity > 0) {
-				break;
-			}
-			System.out.print("Quantity must be greater than 0. Enter again: ");
-		}
+		String strPrice=null;
+		String shift;
+		do {
+			System.out.print("Enter price: ");
+			strPrice=scanner.nextLine();
+			shift = CheckInput.toStrNumberic(strPrice);
+		} while (shift == null);
+
+		long price = Long.parseLong(strPrice);
+		String strQuantity=null;
+		shift=null;
+		do {
+			System.out.print("Enter quantity: ");
+			strQuantity=scanner.nextLine();
+			shift = CheckInput.toStrNumberic(strQuantity);
+		} while (shift == null);
+		int quantity = Integer.parseInt(strQuantity);
 		watchManagement.addWatches(new Watches(id, name, brand, type, price, quantity));
 	}
 
@@ -140,18 +132,26 @@ public class AdminFunction {
 		}
 	}
 
-	public static void deleteAccount(UserManagement userManagement, Scanner scanner) {
-		displayUserlist(userManagement);
-		String id;
-		System.out.print("Enter id: ");
-		while (true) {
-			id = scanner.nextLine();
-			if (userManagement.getAcclist().findIndex(id) != -1) {
-				break;
+	public static boolean deleteAccount(UserManagement userManagement, Scanner scanner) {		
+		if(userManagement.getAcclist().size()!=0){
+			displayUserlist(userManagement);
+			String id;
+			System.out.print("Enter id: ");
+			while (true) {
+				id = scanner.nextLine();
+				if (userManagement.getAcclist().findIndex(id) != -1||id.equals("")) {
+					break;
+				}
+				System.out.print("Id already exists. Enter again: ");
 			}
-			System.out.print("Id already exists. Enter again: ");
+			if(id.equals("")){
+				return true;
+			}
+			userManagement.removeUser(id);
+			System.out.println("User Removed");
 		}
-		userManagement.removeUser(id);
+		else System.out.println("Empty List");
+		return true;
 
 	}
 
@@ -192,12 +192,12 @@ public class AdminFunction {
 	public static void displayWatchlist(WatchManagement watchManagement) {
 		System.out.format("%-10s%-20s%-20s%-20s%-20s%-20s\n", "ID", "Name", "Brand", "Type", "Price", "Quantity");
 		for (Object watch : watchManagement.getWatchList().getArr()) {
-			System.out.format("%-10s%-20s%-20s%-20s%-20f%-20d\n",
+			System.out.format("%-10s%-20s%-20s%-20s%-20s%-20d\n",
 					((Watches) watch).getId(),
 					((Watches) watch).getName(),
 					((Watches) watch).getBrand(),
 					((Watches) watch).getType(),
-					((Watches) watch).getPrice(),
+					ChangeFormat.priceFormat(((Watches) watch).getPrice()),
 					((Watches) watch).getQuantity());
 
 		}
@@ -233,7 +233,8 @@ public class AdminFunction {
 		userManagement.writeFile();
 	}
 
-	public static void blockCustomer(UserManagement userManagement, Scanner scanner) {
+	public static boolean blockCustomer(UserManagement userManagement, Scanner scanner) {
+
 		displayUserlist(userManagement);
 		System.out.print("Enter id: ");
 		String id;
@@ -245,14 +246,21 @@ public class AdminFunction {
 					((User) userManagement.getAcclist().get(index)).getRole().equals("customer")) {
 				break;
 			}
+			if (id.equals("")){
+				break;
+			}
 			System.out.print("Id already exists. Enter again: ");
 		}
+		if (id.equals("")){
+				return true;
+			}
 		User tmp = (User) userManagement.getAcclist().get(index);
 		userManagement.getAcclist().set(index, new Customer(tmp.getId(), tmp.getPassword(), tmp.getFullName(), "0"));
 		userManagement.writeFile();
+		return true;
 	}
 
-	public static void editProduct(WatchManagement watchManagement, Scanner scanner) {
+	public static boolean editProduct(WatchManagement watchManagement, Scanner scanner) {
 		displayWatchlist(watchManagement);
 		System.out.print("Enter id: ");
 		String id;
@@ -260,26 +268,40 @@ public class AdminFunction {
 		while (true) {
 			id = scanner.nextLine();
 			index = watchManagement.getWatchList().findIndex(id);
-			if (index != -1) {
+			if (index != -1||id.equals("")) {
 				break;
 			}
 			System.out.print("Id already exists. Enter again: ");
 		}
-		Watches tmp = (Watches) watchManagement.getWatchList().get(index);
-		System.out.print("Enter new price :");
-		String newprice = (CheckInput.toStrNumberic(scanner.nextLine()));
-		System.out.print("Enter new quantity :");
-		String newquantity = (CheckInput.toStrNumberic(scanner.nextLine()));
-		if (newprice != null) {
-			tmp.setPrice(Double.parseDouble(newprice));
+		if(id.equals("")){
+			return true;
 		}
-		if (newquantity != null) {
-			tmp.setQuantity(Integer.parseInt(newquantity));
-		}
-		watchManagement.getWatchList().set(index, tmp);
+			String newprice;
+			String newquantity;
+			String shift;
+			do {
+				System.out.print("Enter new price: ");
+				newprice=scanner.nextLine();
+				shift = CheckInput.toStrNumberic(newprice);
+			} while (shift == null);
+			shift=null;
+			do {
+				System.out.print("Enter new quantity: ");
+				newquantity=scanner.nextLine();
+				shift = CheckInput.toStrNumberic(newquantity);
+			} while (shift == null);
+		
+			if (newprice != null) {
+				watchManagement.setPrice(index, Long.parseLong(newprice));
+			}
+			if (newquantity != null) {
+				watchManagement.setQuantity(index, Integer.parseInt(newquantity));
+			}
+			System.out.println("Edit successfully");
+			return true;
 	}
 
-	public static void deleteProduct(WatchManagement watchManagement, Scanner scanner) {
+	public static boolean deleteProduct(WatchManagement watchManagement, Scanner scanner) {
 		displayWatchlist(watchManagement);
 		System.out.print("Enter id: ");
 		String id;
@@ -287,11 +309,16 @@ public class AdminFunction {
 		while (true) {
 			id = scanner.nextLine();
 			index = watchManagement.getWatchList().findIndex(id);
-			if (index != -1) {
+			if (index != -1||id.equals("")) {
 				break;
 			}
 			System.out.print("Id already exists. Enter again: ");
 		}
-		watchManagement.getWatchList().remove(index);
+		if(id.equals("")){
+			return true;
+		}
+		watchManagement.removeWatches(id);
+		System.out.println("Product Removed");
+		return true;
 	}
 }
